@@ -1,0 +1,6 @@
+@GatherWise_HostAddress = http://localhost:5091
+
+GET {{GatherWise_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
