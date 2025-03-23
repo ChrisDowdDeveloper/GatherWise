@@ -1,23 +1,47 @@
 using Supabase;
-using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
+using GatherWise.Interfaces;
+using GatherWise.Repositories;
 
-var config = new ConfigurationBuilder()
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration
     .AddJsonFile("appsettings.json", optional: true)
     .AddUserSecrets<Program>()
-    .AddEnvironmentVariables()
-    .Build();
+    .AddEnvironmentVariables();
 
-var url = config["Supabase:Url"];
-var key = config["Supabase:AnonKey"];
-
-if (string.IsNullOrEmpty(url) || string.IsNullOrEmpty(key))
+builder.Services.AddSingleton(provider =>
 {
-    Console.WriteLine("ERROR: Missing Supabase credentials!");
-    return;
+    var config = provider.GetRequiredService<IConfiguration>();
+    var url = config["Supabase:Url"];
+    var key = config["Supabase:AnonKey"];
+
+    if (string.IsNullOrEmpty(url) || string.IsNullOrEmpty(key))
+        throw new Exception("Missing Supabase credentials!");
+
+    var options = new SupabaseOptions { AutoConnectRealtime = true };
+    var client = new Client(url, key, options);
+    client.InitializeAsync().Wait();
+    return client;
+});
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<IInvitationRepository, InvitationRepository>();
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
-var options = new SupabaseOptions { AutoConnectRealtime = true };
-var supabase = new Client(url, key, options);
-await supabase.InitializeAsync();
+app.UseHttpsRedirection();
+app.UseAuthorization();
+app.MapControllers();
 
-Console.WriteLine("Supabase Connected!");
+await app.RunAsync();

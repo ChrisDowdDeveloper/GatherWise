@@ -167,3 +167,4 @@ C:\Users\chris\CodingProjects\GatherWise\obj\Debug\net8.0\refint\GatherWise.dll
 C:\Users\chris\CodingProjects\GatherWise\obj\Debug\net8.0\GatherWise.pdb
 C:\Users\chris\CodingProjects\GatherWise\obj\Debug\net8.0\GatherWise.genruntimeconfig.cache
 C:\Users\chris\CodingProjects\GatherWise\obj\Debug\net8.0\ref\GatherWise.dll
+C:\Users\chris\CodingProjects\GatherWise\obj\Debug\net8.0\GatherWise.sourcelink.json
