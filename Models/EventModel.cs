@@ -2,7 +2,7 @@ using Supabase.Postgrest.Models;
 using Supabase.Postgrest.Attributes;
 
 [Table("events")]
-public class Event : BaseModel
+public class EventModel : BaseModel
 {
     [PrimaryKey("id", false)]
     public Guid Id { get; set; }
@@ -15,6 +15,9 @@ public class Event : BaseModel
 
     [Column("location")]
     public string Location { get; set; }
+
+    [Column("details")]
+    public string Details { get; set; }
 
     [Column("created_at")]
     public DateTime CreatedAt { get; set; }

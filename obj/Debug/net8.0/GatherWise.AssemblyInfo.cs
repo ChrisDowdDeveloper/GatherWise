@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GatherWise")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+61f07480ab5af4aedf28dd71d1b4ee03da074ef5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cb1c9027f42b74b378d5e31edf01eeff958e05fb")]
 [assembly: System.Reflection.AssemblyProductAttribute("GatherWise")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GatherWise")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
