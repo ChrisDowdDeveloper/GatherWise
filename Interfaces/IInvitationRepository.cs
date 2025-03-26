@@ -11,5 +11,7 @@ namespace GatherWise.Interfaces
     {
         Task<IEnumerable<InvitationResponseDto>> GetAll();
         Task<InvitationResponseDto> Create(CreateInvitationDto dto);
+        Task<InvitationResponseDto> GetInvitationByIdAsync(int id);
+        Task<IEnumerable<InvitationResponseDto>> GetInvitationsByEventIdAsync(Guid eventId);
     }
 }

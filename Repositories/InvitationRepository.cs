@@ -32,5 +32,25 @@ namespace GatherWise.Repositories
             var result = await _supabase.From<Invitation>().Insert(model);
             return InvitationMapper.ToDto(result.Models.First());
         }
+
+        public async Task<InvitationResponseDto> GetInvitationByIdAsync(int id)
+        {
+            var result = await _supabase.From<Invitation>().Where(i => i.Id == id).Get();
+
+            var model = result.Models.FirstOrDefault();
+
+            if(model == null)
+            {
+                return null;
+            }
+
+            return InvitationMapper.ToDto(model);
+        }
+
+        public async Task<IEnumerable<InvitationResponseDto>> GetInvitationsByEventIdAsync(Guid eventId)
+        {
+            var result = await _supabase.From<Invitation>().Where(i => i.EventId == eventId).Get();
+            return result.Models.Select(InvitationMapper.ToDto);
+        }
     }
 }
