@@ -25,6 +25,29 @@ namespace GatherWise.Repositories
             return EventMapper.ToDto(result.Models.First());
         }
 
+        public async Task<bool> DeleteEventById(Guid eventId)
+        {
+            var result = await _supabase.From<EventModel>().Where(e => e.Id == eventId).Get();
+            var model = result.Models.FirstOrDefault();
+            if(model == null)
+            {
+                Console.WriteLine("Model not found");
+                return false;
+            }
+            
+            try
+            {
+                await model.Delete<EventModel>();
+                return true;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Delete failed: {ex.Message}");
+                return false;
+            }
+
+        }
+
         public async Task<IEnumerable<EventResponseDto>> GetAll()
         {
             var result = await _supabase.From<EventModel>().Get();
@@ -41,6 +64,25 @@ namespace GatherWise.Repositories
             {
                 return null;
             }
+
+            return EventMapper.ToDto(model);
+        }
+
+        public async Task<EventResponseDto> Update(Guid eventId, UpdateEventDto dto)
+        {
+            var result = await _supabase.From<EventModel>().Where(e => e.Id == eventId).Get();
+            var model = result.Models.FirstOrDefault();
+            if(model == null)
+            {
+                return null;
+            }
+
+            model.Name = dto.Name ?? model.Name;
+            model.Date = dto.Date ?? model.Date;
+            model.Location = dto.Location ?? model.Location;
+            model.Details = dto.Details ?? model.Details;
+
+            await _supabase.From<EventModel>().Update(model);
 
             return EventMapper.ToDto(model);
         }

@@ -48,5 +48,27 @@ namespace GatherWise.Controllers
             return Ok(createdEvent);
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateEvent(Guid id, [FromBody] UpdateEventDto dto)
+        {
+            var updatedEvent = await _repo.Update(id, dto);
+            return Ok(updatedEvent);
+        }
+
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteEvent(Guid id)
+        {
+            var deletedEvent = await _repo.DeleteEventById(id);
+            if(deletedEvent)
+            {
+                return NoContent();
+            }
+            else
+            {
+                return BadRequest("Something went wrong.");
+            }
+        }
+
     }
 }
