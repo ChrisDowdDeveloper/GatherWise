@@ -20,20 +20,31 @@ public class AuthRepository : IAuthRepository
         {
             UserId = session.User?.Id,
             Email = session.User?.Email,
+            Name = session.User?.UserMetadata["full_name"]?.ToString(),
             AccessToken = session.AccessToken
         };
     }
 
     public async Task<AuthResponseDto> SignUp(AuthRequestDto dto)
     {
-        var session = await _supabase.Auth.SignUp(dto.Email, dto.Password);
+        var options = new Supabase.Gotrue.SignUpOptions
+        {
+            Data = new Dictionary<string, object>
+            {
+                { "full_name", dto.Name }
+            }
+        };
+
+        var session = await _supabase.Auth.SignUp(dto.Email, dto.Password, options);
 
         return new AuthResponseDto
         {
             UserId = session.User?.Id,
             Email = session.User?.Email,
+            Name = session.User?.UserMetadata["full_name"]?.ToString(),
             AccessToken = session.AccessToken
         };
     }
+
 
 }
