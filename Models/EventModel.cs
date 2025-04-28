@@ -21,4 +21,7 @@ public class EventModel : BaseModel
 
     [Column("created_at")]
     public DateTime CreatedAt { get; set; }
+
+    [Column("image_url")]
+    public string ImageUrl { get; set; }
 }

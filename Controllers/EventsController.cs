@@ -42,9 +42,9 @@ namespace GatherWise.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateEvent([FromBody] CreateEventDto dto)
+        public async Task<IActionResult> CreateEvent([FromBody] CreateEventDto dto, [FromForm] IFormFile file)
         {
-            var createdEvent = await _repo.Create(dto);
+            var createdEvent = await _repo.Create(dto, file);
             return Ok(createdEvent);
         }
 

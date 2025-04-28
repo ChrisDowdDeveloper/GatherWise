@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using GatherWise.Dtos.Event;
 using GatherWise.Interfaces;
 using GatherWise.Mappers;
 using GatherWise.Models;
+using Microsoft.AspNetCore.Http;
 using Supabase;
 
 namespace GatherWise.Repositories
@@ -18,10 +20,47 @@ namespace GatherWise.Repositories
         {
             _supabase = supabase;
         }
-        public async Task<EventResponseDto> Create(CreateEventDto dto)
+
+        public async Task<EventResponseDto> Create(CreateEventDto dto, IFormFile file)
         {
+            string fileUrl = null;
+
+            if (file != null && file.Length > 0)
+            {
+                var timestamp = DateTime.UtcNow.ToString("yyyyMMddHHmmss");
+                var extension = Path.GetExtension(file.FileName);
+                var fileName = $"event-{timestamp}{extension}";
+                var storagePath = $"events/{fileName}";
+
+                var tempFilePath = Path.GetTempFileName();
+                using (var stream = new FileStream(tempFilePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                var response = await _supabase.Storage
+                    .From("event-pictures")
+                    .Upload(storagePath, tempFilePath);
+
+                File.Delete(tempFilePath);
+
+                if (!string.IsNullOrEmpty(response))
+                {
+                    fileUrl = _supabase.Storage
+                        .From("event-pictures")
+                        .GetPublicUrl(storagePath);
+                }
+                else
+                {
+                    throw new Exception("Failed to upload file: Supabase response was empty.");
+                }
+            }
+
             var model = EventMapper.ToModel(dto);
+            model.ImageUrl = fileUrl;
+
             var result = await _supabase.From<EventModel>().Insert(model);
+
             return EventMapper.ToDto(result.Models.First());
         }
 
@@ -29,23 +68,22 @@ namespace GatherWise.Repositories
         {
             var result = await _supabase.From<EventModel>().Where(e => e.Id == eventId).Get();
             var model = result.Models.FirstOrDefault();
-            if(model == null)
+            if (model == null)
             {
                 Console.WriteLine("Model not found");
                 return false;
             }
-            
+
             try
             {
                 await model.Delete<EventModel>();
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine($"Delete failed: {ex.Message}");
                 return false;
             }
-
         }
 
         public async Task<IEnumerable<EventResponseDto>> GetAll()
@@ -57,10 +95,9 @@ namespace GatherWise.Repositories
         public async Task<EventResponseDto> GetEventByIdAsync(Guid eventId)
         {
             var result = await _supabase.From<EventModel>().Where(e => e.Id == eventId).Get();
-
             var model = result.Models.FirstOrDefault();
 
-            if(model == null)
+            if (model == null)
             {
                 return null;
             }
@@ -72,7 +109,8 @@ namespace GatherWise.Repositories
         {
             var result = await _supabase.From<EventModel>().Where(e => e.Id == eventId).Get();
             var model = result.Models.FirstOrDefault();
-            if(model == null)
+
+            if (model == null)
             {
                 return null;
             }

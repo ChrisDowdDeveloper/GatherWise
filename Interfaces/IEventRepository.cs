@@ -10,7 +10,7 @@ namespace GatherWise.Interfaces
     {
         Task<IEnumerable<EventResponseDto>> GetAll();
         Task<EventResponseDto> GetEventByIdAsync(Guid eventId);
-        Task<EventResponseDto> Create(CreateEventDto dto);
+        Task<EventResponseDto> Create(CreateEventDto dto, IFormFile file);
         Task<EventResponseDto> Update(Guid eventId, UpdateEventDto dto);
         Task<bool>DeleteEventById(Guid eventId);
     }

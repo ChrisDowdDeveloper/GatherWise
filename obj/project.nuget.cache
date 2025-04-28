@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "hemHHctmJvXddP9nCgiTN785cEy6ZhAgv3GzNLm5Px09pJlAU8tcCA7xbnM3Cz8LeB10NilVaZuufxRi5eWgXA==",
+  "dgSpecHash": "QVnJKGs90iJv26/u930ayXsOIEvpd1JrLxk02bHvy+RuXWqR+hjiSmN3FlxtNMczuptoF3RV1pAvkT8zJfDpCA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\chris\\CodingProjects\\GatherWise\\GatherWise.csproj",
+  "projectFilePath": "C:\\Users\\chris\\CodingProjects\\gatherwise\\GatherWise.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\chris\\.nuget\\packages\\bouncycastle.cryptography\\2.5.1\\bouncycastle.cryptography.2.5.1.nupkg.sha512",
     "C:\\Users\\chris\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
