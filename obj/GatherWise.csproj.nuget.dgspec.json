@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\chris\\CodingProjects\\gatherwise\\GatherWise.csproj": {}
+    "C:\\Users\\chris\\CodingProjects\\GatherWise\\GatherWise.csproj": {}
   },
   "projects": {
-    "C:\\Users\\chris\\CodingProjects\\gatherwise\\GatherWise.csproj": {
+    "C:\\Users\\chris\\CodingProjects\\GatherWise\\GatherWise.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\chris\\CodingProjects\\gatherwise\\GatherWise.csproj",
+        "projectUniqueName": "C:\\Users\\chris\\CodingProjects\\GatherWise\\GatherWise.csproj",
         "projectName": "GatherWise",
-        "projectPath": "C:\\Users\\chris\\CodingProjects\\gatherwise\\GatherWise.csproj",
+        "projectPath": "C:\\Users\\chris\\CodingProjects\\GatherWise\\GatherWise.csproj",
         "packagesPath": "C:\\Users\\chris\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\chris\\CodingProjects\\gatherwise\\obj\\",
+        "outputPath": "C:\\Users\\chris\\CodingProjects\\GatherWise\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

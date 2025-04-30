@@ -40,6 +40,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IInvitationRepository, InvitationRepository>();
+builder.Services.AddScoped<IEventRepository, EventRepository>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 
 var app = builder.Build();
